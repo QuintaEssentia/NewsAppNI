@@ -49,66 +49,81 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Get the original location string from the Earthquake object,
         // which can be in the format of "5km N of Cairo, Egypt" or "Pacific-Antarctic Ridge".
         String originalDate = currentNews.getmDate();
+        String originalTime = currentNews.getmTime();
 
         // If the original location string (i.e. "5km N of Cairo, Egypt") contains
         // a primary location (Cairo, Egypt) and a location offset (5km N of that city)
         // then store the primary location separately from the location offset in 2 Strings,
         // so they can be displayed in 2 TextViews.
 
-        String newsDate;
-        String newsTimeRaw;
-        String newsTimeFin;
+        //String newsDate;
+        //String newsTimeRaw;
+        //String newsTimeFin;
 
         // Check whether the originalLocation string contains the " of " text
 
             // Split the string into different parts (as an array of Strings)
             // based on the " of " text. We expect an array of 2 Strings, where
             // the first String will be "5km N" and the second String will be "Cairo, Egypt".
-            String[] parts = originalDate.split(DATE_SEPARATOR);
-            // Location offset should be "5km N " + " of " --> "5km N of"
-            newsDate = parts[0];
-            // Primary location should be "Cairo, Egypt"
-           newsTimeRaw = parts[1];
-           String[] timeparts = newsTimeRaw.split(TIME_SEPARATOR);
-           newsTimeFin = timeparts[0];
+          //  String[] parts = originalDate.split(DATE_SEPARATOR);
+                // Locaton offset should be "5km N " + " of " --> "5km N of"
+            //    newsDate = parts[0];
+                // Primary location should be "Cairo, Egypt"
+             //  newsTimeRaw = parts[1];
+              // String[] timeparts = newsTimeRaw.split(TIME_SEPARATOR);
+              // newsTimeFin = timeparts[0];
 
-          // TextView dateText = listItemView.findViewById(R.id.pubDate);
-           //dateText.setText(newsDate);
+        // Find the TextView with view ID date
+           TextView dateText = listItemView.findViewById(R.id.pubDate);
+          dateText.setText(originalDate);
         // Find the TextView with view ID location
+
+        //DateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+
 
         //TextView timeText = listItemView.findViewById(R.id.pubTIme);
         //timeText.setText(newsTimeFin);
 
-               // Create a new Date object from the date and time
-        DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
 
-        DateFormat dft = new SimpleDateFormat("hh:mm:ss");
+
+               // Create a new Date object from the date and time
+      //  DateFormat df = new SimpleDateFormat("YYYY-MM-DD");
+
+        //DateFormat dft = new SimpleDateFormat("hh:mm:ss");
 
         // Find the TextView with view ID date
-        TextView dateView = (TextView) listItemView.findViewById(R.id.pubDate);
+
         // Format the date string (i.e. "Mar 3, 1984")
-        Date resultDate = null;
-        try {
-            resultDate = df.parse(newsDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String formattedDate = formatDate(resultDate);
+
+        //Date resultDate = null;
+        //try {
+         //   resultDate = df.parse(newsDate);
+        //} catch (ParseException e) {
+        //    e.printStackTrace();
+        //}
+        //Date myDate = null;
+        //try {
+          //  myDate = myFormat.parse(originalDate);
+        //} catch (ParseException e) {
+          //  e.printStackTrace();
+       // }
+        //String formattedDate = formatDate(myDate);
         // Display the date of the news in that TextView
-        dateView.setText(formattedDate);
+        //dateView.setText(formattedDate);
 
         // Find the TextView with view ID time
         TextView timeView = (TextView) listItemView.findViewById(R.id.pubTIme);
+        timeView.setText(originalTime);
         // Format the time string (i.e. "4:30PM")
-        Date resultTime = null;
-        try {
-            resultTime = dft.parse(newsTimeFin);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String formattedTime = formatTime(resultTime);
+        //Date resultTime = null;
+        //try {
+        //    resultTime = dft.parse(newsTimeFin);
+        //} catch (ParseException e) {
+        //    e.printStackTrace();
+        //}
+        //String formattedTime = formatTime(myDate);
         // Display the time of the news in that TextView
-        timeView.setText(formattedTime);
+        //timeView.setText(formattedTime);
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;

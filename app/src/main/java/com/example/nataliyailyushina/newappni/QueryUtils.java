@@ -17,6 +17,10 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
@@ -55,6 +59,35 @@ public class QueryUtils {
         }
         return url;
     }
+
+    private static String formatDate(String dateData) {
+        String guardianJsonDateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat jsonDateFormatter = new SimpleDateFormat(guardianJsonDateFormat);
+        try {
+            Date jsonDateToParse = jsonDateFormatter.parse(dateData);
+            String resultDate = "MMM d, yyy";
+            SimpleDateFormat resultDateFormatter = new SimpleDateFormat(resultDate);
+            return resultDateFormatter.format(jsonDateToParse);
+        } catch (ParseException e) {
+            Log.e(LOG_TAG, "Error Formatting the Json Date", e);
+            return "";
+        }
+    }
+
+    private static String formatTime(String dateData) {
+        String guardianJsonDateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+        SimpleDateFormat jsonDateFormatter = new SimpleDateFormat(guardianJsonDateFormat);
+        try {
+            Date jsonDateToParse = jsonDateFormatter.parse(dateData);
+            String resultTime = "h:mm a";
+            SimpleDateFormat resultDateFormatter = new SimpleDateFormat(resultTime);
+            return resultDateFormatter.format(jsonDateToParse);
+        } catch (ParseException e) {
+            Log.e(LOG_TAG, "Error Formatting the Json Date", e);
+            return "";
+        }
+    }
+
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
@@ -155,23 +188,26 @@ public class QueryUtils {
                 // For a given earthquake, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that earthquake.
-                JSONObject properties = currentNews.getJSONObject("results");
+                //JSONObject properties = currentNews.getJSONObject("results");
 
                 // Extract the value for the key called "mag"
-                String title = properties.getString("webTitle");
+                String title = currentNews.getString("webTitle");
 
                 // Extract the value for the key called "place"
-                String section = properties.getString("sectionName");
+                String section = currentNews.getString("sectionName");
 
                 // Extract the value for the key called "time"
-                String date = properties.getString("webPublicationDate");
+                String date = currentNews.getString("webPublicationDate");
+
+                date = formatDate(date);
+                String time = formatTime(date);
 
                 // Extract the value for the key called "url"
-                String url = properties.getString("webUrl");
+                String url = currentNews.getString("webUrl");
 
                 // Create a new {@link News} object with the magnitude, location, time,
                 // and url from the JSON response.
-                News newnews = new News(title, section, date, url);
+                News newnews = new News(title, section, date, time, url);
 
                 // Add the new {@link News} to the list of earthquakes.
                 news.add(newnews);
