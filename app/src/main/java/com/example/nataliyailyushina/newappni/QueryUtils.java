@@ -110,7 +110,7 @@ public class QueryUtils {
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -205,9 +205,21 @@ public class QueryUtils {
                 // Extract the value for the key called "url"
                 String url = currentNews.getString("webUrl");
 
+                JSONArray newsTags = currentNews.getJSONArray("tags");
+
+
+                    //JSONObject currentTags = newsTags.getJSONObject(0);
+                   // String author = currentTags.getString("webTitle");
+
+
+                String author = "author name not found";
+
+                if (newsTags != null && newsTags.length() > 0) //if the author found ,parse it
+                    author = newsTags.getJSONObject(0).getString("firstName") + " " + newsTags.getJSONObject(0).getString("lastName");
+
                 // Create a new {@link News} object with the magnitude, location, time,
                 // and url from the JSON response.
-                News newnews = new News(title, section, date, time, url);
+                News newnews = new News(title, section, date, time, url, author);
 
                 // Add the new {@link News} to the list of earthquakes.
                 news.add(newnews);
