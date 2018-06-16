@@ -17,12 +17,12 @@
 
     <!-- Label for order-by here define key-value and default and title -->
     <string name="settings_filter_by_farmed_label">Animals farmed</string>
-    <string name="settings_filter_by_farmed_key_value" >politics</string>
+    <string name="settings_filter_by_farmed_key_value" >farmed</string>
 
 
     <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
     <string name="settings_filter_by_art_label">Art and design</string>
-    <string name="settings_filter_by_art_key_value" >business</string>
+    <string name="settings_filter_by_art_key_value" >art</string>
 
 
     <string name="settings_filter_by_world_news_label">World news</string>
@@ -31,7 +31,7 @@
 
 
     <string name="settings_filter_by_environment_label">Environment</string>
-    <string name="settings_filter_by_environment_key_value" >music</string>
+    <string name="settings_filter_by_environment_key_value" >environment</string>
 
     <string name="settings_pref_title_rubric">Choose the category of news</string>
 </resources>
