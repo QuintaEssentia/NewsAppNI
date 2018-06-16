@@ -150,7 +150,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    // This method initialize the contents of the Activity's options menu
+    // This method initialize the contents of the  Activity's options menu
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
