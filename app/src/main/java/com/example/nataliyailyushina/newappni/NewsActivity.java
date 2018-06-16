@@ -4,9 +4,11 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -98,13 +100,26 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        //Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
-        //Uri.Builder uriBuilder = baseUri.buildUpon();
+        // Create a new loader for the given URL
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //uriBuilder.appendQueryParameter("format", "geojson");
-        //uriBuilder.appendQueryParameter("limit", "10");
-        //uriBuilder.appendQueryParameter("minmag", minMagnitude);
-        //uriBuilder.appendQueryParameter("orderby", orderBy);
+
+        // parse breaks apart the URI string that's passed into its parameter
+        Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
+
+        // buildUpon prepares the baseUri that we just parsed so we can add query parameters to it
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+
+        String sectionSelection = sharedPrefs.getString(
+                getString(R.string.settings_section_filter),
+                getString(R.string.settings_section_filter_default));
+
+        // Append query parameter and its value. For example, the section=politics
+        if (!sectionSelection.equals(getString(R.string.settings_section_filter_default))) {
+            uriBuilder.appendQueryParameter("section", sectionSelection);
+        }
+
 
         return new NewsLoader(this, NEWS_REQUEST_URL);
     }
