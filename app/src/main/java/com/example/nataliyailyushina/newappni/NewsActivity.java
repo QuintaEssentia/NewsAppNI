@@ -25,8 +25,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     private static final String NEWS_REQUEST_URL =
-           "https://content.guardianapis.com/search?api-key=ab9f76cb-c971-4aa4-892f-24e1e2ce129d&show-tags=contributor&show-fields=thumbnail";
-    // "https://content.guardianapis.com/search?q=animals&show-tags=contributor&show-fields=thumbnail&api-key=test";
+      //     "https://content.guardianapis.com/search?api-key=ab9f76cb-c971-4aa4-892f-24e1e2ce129d&show-tags=contributor&show-fields=thumbnail";
+    "https://content.guardianapis.com/search?q=animals&show-tags=contributor&show-fields=thumbnail&api-key=ab9f76cb-c971-4aa4-892f-24e1e2ce129d";
 
 
     private NewsAdapter mAdapter;
