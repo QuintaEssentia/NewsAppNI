@@ -191,19 +191,19 @@ public class QueryUtils {
                 //JSONObject properties = currentNews.getJSONObject("results");
 
                 // Extract the value for the key called "mag"
-                String title = currentNews.getString("webTitle");
+                String title = currentNews.optString("webTitle");
 
                 // Extract the value for the key called "place"
-                String section = currentNews.getString("sectionName");
+                String section = currentNews.optString("sectionName");
 
                 // Extract the value for the key called "time"
-                String date = currentNews.getString("webPublicationDate");
+                String date = currentNews.optString("webPublicationDate");
 
                 date = formatDate(date);
                 String time = formatTime(date);
 
                 // Extract the value for the key called "url"
-                String url = currentNews.getString("webUrl");
+                String url = currentNews.optString("webUrl");
 
                 JSONArray newsTags = currentNews.getJSONArray("tags");
 
@@ -215,7 +215,7 @@ public class QueryUtils {
                 String author = "author name not found";
 
                 if (newsTags != null && newsTags.length() > 0) //if the author found ,parse it
-                    author = newsTags.getJSONObject(0).getString("firstName") + " " + newsTags.getJSONObject(0).getString("lastName");
+                    author = newsTags.getJSONObject(0).optString("firstName") + " " + newsTags.getJSONObject(0).optString("lastName");
 
                 // Create a new {@link News} object with the magnitude, location, time,
                 // and url from the JSON response.

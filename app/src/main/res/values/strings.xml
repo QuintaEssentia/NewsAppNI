@@ -5,6 +5,14 @@
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">News Settings</string>
 
+    <!-- examples -->
+
+    <string name="ex_name">example name</string>
+    <string name="ex_author">John Smith</string>
+    <string name="ex_date">Feb 21, 2018</string>
+    <string name="ex_time">12:24</string>
+    <string name="ex_section">example section</string>
+
     <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
     <string name="settings_filter_by_label">Order By</string>
     <string name="settings_section_filter" translatable="false">section</string>
@@ -17,12 +25,12 @@
 
     <!-- Label for order-by here define key-value and default and title -->
     <string name="settings_filter_by_farmed_label">Animals farmed</string>
-    <string name="settings_filter_by_farmed_key_value" >farmed</string>
+    <string name="settings_filter_by_farmed_key_value" >animals-farmed</string>
 
 
     <!-- Label for order-by most recent option [CHAR LIMIT=20] -->
     <string name="settings_filter_by_art_label">Art and design</string>
-    <string name="settings_filter_by_art_key_value" >art</string>
+    <string name="settings_filter_by_art_key_value" >artanddesign</string>
 
 
     <string name="settings_filter_by_world_news_label">World news</string>

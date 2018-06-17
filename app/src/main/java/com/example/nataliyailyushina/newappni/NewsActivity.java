@@ -17,11 +17,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
+public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>>,
+SharedPreferences.OnSharedPreferenceChangeListener{
 
 
     private static final String NEWS_REQUEST_URL =
@@ -49,6 +52,11 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(mAdapter);
+        // Obtain a reference to the SharedPreferences file for this app
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // And register to be notified of preference changes
+        // So we know when the user has adjusted the query settings
+        prefs.registerOnSharedPreferenceChangeListener(this);
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected earthquake.
@@ -98,7 +106,23 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        if (key.equals(getString(R.string.settings_section_filter))){
+            // Clear the ListView as a new query will be kicked off
+            mAdapter.clear();
 
+            // Hide the empty state text view as the loading indicator will be displayed
+            mEmptyStateTextView.setVisibility(View.GONE);
+
+            // Show the loading indicator while new data is being fetched
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
+            // Restart the loader to requery the USGS as the query settings have been updated
+            getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+        }
+    }
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
         // Create a new loader for the given URL
@@ -122,7 +146,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
 
-        return new NewsLoader(this, NEWS_REQUEST_URL);
+        return new NewsLoader(this, uriBuilder.toString());
     }
 
     @Override
